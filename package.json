@@ -2,11 +2,12 @@
 	"name": "obsidian-omnidian-plugin",
 	"version": "1.0.0",
 	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
-	"main": "./.obsidian/plugin/main.js",
+	"main": "./build/main.js",
 	"scripts": {
-		"dev": "conc 'bun build:css -- --watch' 'bun build.ts --watch'",
-		"build": "conc 'bun ts:check' 'bun lint' && conc 'bun build:css' 'bun build.ts production'",
-		"build:css": "tailwindcss -i ./src/styles.css -o ./.obsidian/plugins/plugin/styles.css",
+		"dev": "conc 'bun dev:css -- --watch' 'bun build.ts --watch'",
+		"dev:css": "tailwindcss -i ./src/styles.css -o ./.obsidian/plugins/plugin/styles.css",
+		"build": "conc 'bun ts:check' 'bun lint -- --quiet' && conc 'bun build:css' 'bun ./scripts/build.ts production'",
+		"build:css": "tailwindcss -i ./src/styles.css -o ./build/styles.css",
 		"ts:check": "tsc -noEmit -skipLibCheck",
 		"lint": "eslint ./src",
 		"version": "node version-bump.mjs && git add manifest.json versions.json"

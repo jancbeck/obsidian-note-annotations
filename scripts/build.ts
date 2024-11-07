@@ -8,7 +8,7 @@ const prod = process.argv[2] === "production";
 
 const result = await Bun.build({
 	entrypoints: ["./src/main.ts"],
-	outdir: "./.obsidian/plugins/plugin",
+	outdir: prod ? "./build" : "/.sandbox/.obsidian/plugins/plugin",
 	format: "cjs",
 	external: [
 		"obsidian",

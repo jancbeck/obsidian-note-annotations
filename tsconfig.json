@@ -33,5 +33,5 @@
 			"@/*": ["./src/*"]
 		}
 	},
-	"include": ["./src", "build.ts"]
+	"include": ["./src", "scripts/build.ts"]
 }
