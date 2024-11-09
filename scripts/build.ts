@@ -4,36 +4,19 @@ if you want to view the source, please visit the github repository of this plugi
 */
 `;
 
-const prod = process.argv[2] === "production";
-
 const result = await Bun.build({
 	entrypoints: ["./src/main.ts"],
-	outdir: prod ? "./build" : "/.sandbox/.obsidian/plugins/plugin",
+	outdir: "./build",
 	format: "cjs",
-	external: [
-		"obsidian",
-		"electron",
-		"@codemirror/autocomplete",
-		"@codemirror/collab",
-		"@codemirror/commands",
-		"@codemirror/language",
-		"@codemirror/lint",
-		"@codemirror/search",
-		"@codemirror/state",
-		"@codemirror/view",
-		"@lezer/common",
-		"@lezer/highlight",
-		"@lezer/lr",
-	],
-	sourcemap: prod ? "none" : "inline",
-	minify: prod,
+	external: ["obsidian", "electron", "@codemirror/*", "@lezer/*"],
+	minify: true,
 	loader: {
 		".json": "file",
 	},
 	naming: {
 		asset: "[name].[ext]",
 	},
-	banner: prod ? banner : "",
+	banner,
 });
 
 if (!result.success) {
