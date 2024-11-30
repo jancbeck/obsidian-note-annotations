@@ -33,7 +33,7 @@ export default class OmnidianPlugin extends Plugin {
 			"highlighter",
 			`${
 				this.isHighlightingModeOn ? "Disable" : "Enable"
-			} Highlighting Mode`,
+			} highlighting mode`,
 			() => {
 				this.toggleHighlightingMode();
 			},
@@ -55,29 +55,15 @@ export default class OmnidianPlugin extends Plugin {
 
 		this.addCommand({
 			id: "create-highlight",
-			name: "Highlight Selection",
-			editorCheckCallback: (checking: boolean, editor) => {
-				if (!checking) {
-					createHighlightCommand(
-						editor,
-						this.settings.expandSelection,
-					);
-				}
-				// This command will only show up in Command Palette when the check function returns true
-				return true;
-			},
+			name: "Highlight selection",
+			editorCallback: (editor) =>
+				createHighlightCommand(editor, this.settings.expandSelection),
 		});
 
 		this.addCommand({
 			id: "toggle-highlighting-mode",
-			name: "Toggle Highlight Mode",
-			editorCheckCallback: (checking: boolean) => {
-				if (!checking) {
-					this.toggleHighlightingMode();
-				}
-				// This command will only show up in Command Palette when the check function returns true
-				return true;
-			},
+			name: "Toggle highlight mode",
+			editorCallback: () => this.toggleHighlightingMode(),
 		});
 
 		// This adds a settings tab so the user can configure various aspects of the plugin
@@ -140,11 +126,11 @@ export default class OmnidianPlugin extends Plugin {
 	toggleHighlightingMode() {
 		this.isHighlightingModeOn = !this.isHighlightingModeOn;
 		this.statusBarItemEl?.setText(
-			`Highlighting Mode: ${this.isHighlightingModeOn}`,
+			`Highlighting mode: ${this.isHighlightingModeOn}`,
 		);
 		new Notice(
-			`Highlighting Mode ${
-				this.isHighlightingModeOn ? "Enabled" : "Disabled"
+			`Highlighting mode ${
+				this.isHighlightingModeOn ? "enabled" : "disabled"
 			}`,
 		);
 	}
@@ -152,7 +138,7 @@ export default class OmnidianPlugin extends Plugin {
 	addStatusBarModeIndicator() {
 		this.statusBarItemEl = this.addStatusBarItem();
 		this.statusBarItemEl.setText(
-			`Highlighting Mode: ${this.isHighlightingModeOn}`,
+			`Highlighting mode: ${this.isHighlightingModeOn}`,
 		);
 		this.statusBarItemEl.addEventListener("click", () =>
 			this.toggleHighlightingMode(),

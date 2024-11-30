@@ -1,4 +1,4 @@
-# Omnidian Reader
+# Obsidian Note Annotations
 
 Better active reading experience in Obsidian.
 

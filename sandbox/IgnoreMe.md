@@ -49,22 +49,17 @@
 ## Notebook
 
 -   curating and using highlights across files
-    -   datacore https://github.com/blacksmithgu/datacore
+    -   ~~datacore https://github.com/blacksmithgu/datacore~~~~
+        -   not possible because Obsidian doesn't cache on sentence level
 -   spaced repetition learning
 
 ## Roadmap
 
-    - [ ] decision on syntax
-    - [ ] api to CRUD highlights from both source and preview mode. ui needs to come second
-    - [ ] api to query highlights + footnotes
+-   [ ] decision on syntax
+-   [ ] api to CRUD highlights from both source and preview mode. ui needs to come second
+-   [ ] api to query highlights + footnotes
 
 ## Open Questions
 
 -   does active reading fall into the reading or writing category?
 -   do highlight colors have semantic meaning?
-
-## Names
-
--   omnidian
--   obsivore
--   omnisidian

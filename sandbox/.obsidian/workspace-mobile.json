@@ -145,7 +145,7 @@
 			"daily-notes:Open today's daily note": false,
 			"templates:Insert template": false,
 			"command-palette:Open command palette": false,
-			"omnidian:Enable Highlighting Mode": false
+			"note-annotations:Enable highlighting mode": false
 		}
 	},
 	"active": "bc3d91a8ac10e245",
