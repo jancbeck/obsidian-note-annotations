@@ -1,9 +1,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.is-live-preview::selection {
-	background-color: var(--text-highlight-bg) !important;
-}
 #omnidian-comment-popover-container {
 	border: none;
 	background: transparent;

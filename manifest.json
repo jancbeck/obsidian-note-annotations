@@ -1,9 +1,9 @@
 {
-	"id": "omnidian",
-	"name": "Omnidian",
+	"id": "note-annotations",
+	"name": "Note Annotations",
 	"version": "1.0.0",
 	"minAppVersion": "1.7.0",
-	"description": "Better active reading experience in Obsidian",
+	"description": "Add multi-colored highlights and comments to your notes",
 	"author": "Jan Beck",
 	"authorUrl": "https://github.com/jancbeck",
 	"isDesktopOnly": false
