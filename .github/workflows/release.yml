@@ -25,7 +25,7 @@ jobs:
               run: |
                   tag="${GITHUB_REF#refs/tags/}"
 
-                  cd ./.obsidian/plugins/plugin
+                  cd ./build
 
                   gh release create "$tag" \
                   --generate-notes \
