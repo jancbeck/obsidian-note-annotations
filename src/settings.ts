@@ -17,7 +17,7 @@ export class OmnidianSettingTab extends PluginSettingTab {
 		new Setting(containerEl)
 			.setName("Expand selection")
 			.setDesc(
-				"Expand the text selection boundary highlight complete words. This avoids selections that can break markdown rendering. Hold Alt key while selecting to override this setting."
+				"Expand the text selection boundary highlight complete words. This avoids selections that can break markdown rendering. Hold Alt key while selecting to override this setting.",
 			)
 			.addToggle((toggle) =>
 				toggle
@@ -25,17 +25,17 @@ export class OmnidianSettingTab extends PluginSettingTab {
 					.onChange(async (value) => {
 						this.plugin.settings.expandSelection = value;
 						await this.plugin.saveSettings();
-					})
+					}),
 			);
 
 		new Setting(containerEl)
 			.setName("Highlighting color options")
 			.setDesc(
-				document
+				activeDocument
 					.createRange()
 					.createContextualFragment(
-						"Add comma separated list of <a href='https://147colors.com'>color names</a>. Requires app reload."
-					)
+						"Add comma separated list of <a href='https://147colors.com'>color names</a>. Requires app reload.",
+					),
 			)
 			.setClass("[&_textarea]:w-full")
 			.addTextArea((toggle) =>
@@ -46,7 +46,7 @@ export class OmnidianSettingTab extends PluginSettingTab {
 							.split(",")
 							.map((c) => c.trim());
 						await this.plugin.saveSettings();
-					})
+					}),
 			);
 	}
 }

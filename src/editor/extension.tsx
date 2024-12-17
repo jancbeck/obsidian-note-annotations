@@ -19,10 +19,10 @@ import CommentPopover from "./popover";
 import { editorLivePreviewField } from "obsidian";
 import { matchColor } from "@/lib/utils";
 
-const popoverContainerEl = document.createElement("div");
+const popoverContainerEl = activeDocument.createElement("div");
 popoverContainerEl.setAttribute("popover", "auto");
 popoverContainerEl.setAttribute("id", "omnidian-comment-popover-container");
-document.body.appendChild(popoverContainerEl);
+activeDocument.body.appendChild(popoverContainerEl);
 const root = createRoot(popoverContainerEl);
 
 const ShowPopoverEffect = StateEffect.define<{ from: number; to: number }>();
@@ -49,9 +49,9 @@ class HighlightWidget extends WidgetType {
 		private colorOptions: string[],
 		private addNewFileFn: [
 			string | undefined,
-			(path: string, data: string) => Promise<void>
+			(path: string, data: string) => Promise<void>,
 		],
-		private wrapperEl?: HTMLElement
+		private wrapperEl?: HTMLElement,
 	) {
 		super();
 	}
@@ -69,7 +69,7 @@ class HighlightWidget extends WidgetType {
 
 	toDOM(view: EditorView) {
 		this.view = view;
-		const wrapper = document.createElement("span");
+		const wrapper = activeDocument.createElement("span");
 		this.wrapperEl = wrapper;
 		this.wrapperEl.className = this.hasComment
 			? "omnidian-highlight has-comment"
@@ -88,7 +88,7 @@ class HighlightWidget extends WidgetType {
 			this.positionPopover();
 			setTimeout(() => {
 				const textarea = getPopover()?.find(
-					"textarea"
+					"textarea",
 				) as HTMLTextAreaElement;
 				if (textarea) {
 					textarea.focus();
@@ -137,7 +137,7 @@ class HighlightWidget extends WidgetType {
 					}
 				}}
 				popoverRef={popover}
-			/>
+			/>,
 		);
 	}
 
@@ -152,13 +152,13 @@ class HighlightWidget extends WidgetType {
 		const popoverWidth = popoverRect.width;
 		const centerOffset = (wrapperWidth - popoverWidth) / 2;
 
-		popover.style.top = `${rect.bottom + window.scrollY + 10}px`;
-		popover.style.left = `${rect.left + window.scrollX + centerOffset}px`;
+		popover.style.top = `${rect.bottom + activeWindow.scrollY + 10}px`;
+		popover.style.left = `${rect.left + activeWindow.scrollX + centerOffset}px`;
 
 		// Adjust position if it goes off-screen
 		const rightEdge = rect.left + popoverRect.width;
-		if (rightEdge > window.innerWidth) {
-			popover.style.left = `${window.innerWidth - popoverRect.width}px`;
+		if (rightEdge > activeWindow.innerWidth) {
+			popover.style.left = `${activeWindow.innerWidth - popoverRect.width}px`;
 		}
 	}
 
@@ -257,8 +257,8 @@ function createHighlightDecorations(
 	colorOptions: string[],
 	addNewFileFn: [
 		string | undefined,
-		(path: string, data: string) => Promise<void>
-	]
+		(path: string, data: string) => Promise<void>,
+	],
 ): DecorationSet {
 	const decorations: Range<Decoration>[] = [];
 	const matches = findHighlightsAndComments(state.doc);
@@ -273,7 +273,7 @@ function createHighlightDecorations(
 				match.hasComment,
 				match.hasColor,
 				colorOptions,
-				addNewFileFn
+				addNewFileFn,
 			),
 		}).range(match.from, match.to);
 
@@ -287,8 +287,8 @@ export function highlightExtension(
 	colorOptions: string[],
 	addNewFileFn: [
 		string | undefined,
-		(path: string, data: string) => Promise<void>
-	]
+		(path: string, data: string) => Promise<void>,
+	],
 ): Extension {
 	const highlightField = StateField.define<DecorationSet>({
 		create(state) {
@@ -299,16 +299,16 @@ export function highlightExtension(
 			return createHighlightDecorations(
 				state,
 				colorOptions,
-				addNewFileFn
+				addNewFileFn,
 			);
 		},
 		update(decorations, transaction) {
 			// Handle mode changes
 			const isLivePreview = transaction.state.field(
-				editorLivePreviewField
+				editorLivePreviewField,
 			);
 			const wasLivePreview = transaction.startState.field(
-				editorLivePreviewField
+				editorLivePreviewField,
 			);
 
 			// If mode changed or we're in source mode
@@ -320,7 +320,7 @@ export function highlightExtension(
 					return createHighlightDecorations(
 						transaction.state,
 						colorOptions,
-						addNewFileFn
+						addNewFileFn,
 					);
 				}
 			}
@@ -330,7 +330,7 @@ export function highlightExtension(
 				return createHighlightDecorations(
 					transaction.state,
 					colorOptions,
-					addNewFileFn
+					addNewFileFn,
 				);
 			}
 			return decorations.map(transaction.changes);
@@ -359,13 +359,13 @@ export function highlightExtension(
 							}
 							setTimeout(
 								() => deco.spec.widget.showPopover(update.view),
-								0
+								0,
 							);
-						}
+						},
 					);
 				}
 			}
-		}
+		},
 	);
 
 	return [highlightField, highlightPlugin];
@@ -378,7 +378,7 @@ export function createHighlight(view: EditorView) {
 
 	const selectedText = view.state.doc.sliceString(
 		selection.from,
-		selection.to
+		selection.to,
 	);
 	const highlightText = `==${selectedText}==`;
 
@@ -411,7 +411,7 @@ export function cleanup() {
 	popoverContainerEl.remove();
 }
 export function getPopover() {
-	return document.getElementById(`omnidian-comment-popover-container`);
+	return activeDocument.getElementById(`omnidian-comment-popover-container`);
 }
 export function hidePopover() {
 	getPopover()?.hidePopover();

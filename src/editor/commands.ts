@@ -32,7 +32,7 @@ export async function createHighlightCommand(
 	}
 
 	editor.blur();
-	document.getSelection()?.empty();
+	activeDocument.getSelection()?.empty();
 
 	// @ts-expect-error, not typed
 	const editorView = editor.cm as EditorView;

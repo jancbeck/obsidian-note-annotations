@@ -71,18 +71,26 @@ export default class OmnidianPlugin extends Plugin {
 
 		// prevent any other editor actions when in highlighting mode
 		this.registerDomEvent(
-			document,
+			activeDocument,
 			"mousedown",
 			this.lockEditorInHighlightingModeEventHandler,
 		);
 		this.registerDomEvent(
-			document,
+			activeDocument,
 			"touchstart",
 			this.lockEditorInHighlightingModeEventHandler,
 		);
 		// highlight selected text when in annotate mode
-		this.registerDomEvent(document, "mouseup", this.highlightEventHandler);
-		this.registerDomEvent(document, "touchend", this.highlightEventHandler);
+		this.registerDomEvent(
+			activeDocument,
+			"mouseup",
+			this.highlightEventHandler,
+		);
+		this.registerDomEvent(
+			activeDocument,
+			"touchend",
+			this.highlightEventHandler,
+		);
 
 		this.registerMarkdownPostProcessor(postprocessor);
 	}
@@ -112,8 +120,8 @@ export default class OmnidianPlugin extends Plugin {
 		if (!(e.metaKey || e.altKey) && !this.isHighlightingModeOn) return;
 
 		if (
-			e.target instanceof HTMLElement &&
-			!e.target.closest(".is-live-preview")
+			(e.target as HTMLElement).instanceOf(HTMLElement) &&
+			!(e.target as HTMLElement).closest(".is-live-preview")
 		) {
 			return;
 		}
